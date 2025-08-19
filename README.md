@@ -34,6 +34,19 @@ Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some
 Similarly, when you already have a fairly complete or even the most feature-rich software edition, as a non-stamp-collecting enthusiast, you don't want to bother with other editions. For Windows, you are expected to use the Professional, Education or Enterprise edition (Datacenter for Windows Server). For Office, you are expected to use the LTSC Professional Plus edition. These editions are well supported for KMS activation, hence there is absolutely no need for you to trouble with Retail or less-featured editions that do not support KMS.
 
 
+# How it works
+
+Somehow hackers got the RSA key to decrypt the SPP store file (data.dat).
+
+So we can put fake universal KMS activation data and fake timestamp for each product.
+
+Microsoft KMS timestamp allows a maximum duration about approximately 4083 years.
+
+We can then set the ideal grace period.
+
+By the way, I've tried to only tamper the timestamp without touching the corresponding activation data stored from a real KMS activation process, and it simply works. This perfectly proves that the minimum modification requirement for a long-term KMS only involves changing of three timestamps (a total of 24 bytes), as long as you have already gone through a legitimate KMS activation process and trying to turn it from a short-term (180-day) into a long-term (180 years or whatever).
+
+
 # Configurations
 
 Currently, I do not want to make things complicated, and I only use a "product.txt" file to describe products that need to be activated. You need to create this file yourself, as I should not directly provide any convenience for illegal activations.
