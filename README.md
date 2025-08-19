@@ -14,7 +14,7 @@ KMS Patrina implements practically permanent KMS activation for the latest Micro
 
 - Sets the KMS grace period spanning multiple centuries.
 
-The advantage of using offline KMS activation with unlicensed Microsoft products is that it does not rely on the Internet or any third-party service, and covers the entire product line (Windows, Windows Server and Office), which is more appealing than any other known method. Copy-in and back "data.dat" is enough to activate other computers - they don't even need to run anything.
+The advantage of using offline KMS activation with unlicensed Microsoft products is that it does not rely on the Internet or any third-party service, and covers the entire product line (Windows, Windows Server and Office), which is more appealing than any other known method. Copy-over and back "data.dat" is enough to activate other computers - they don't even need to run anything.
 
 For practical considerations, I've set the default grace period from 1900-01-01 to 2199-12-31, which covers all possibilities of intentional or unintentional system time adjustments, ensuring the activation won't drop. And I have totally no interest on things like setting the activation to the year AD 6100 just for fun.
 
@@ -32,6 +32,41 @@ This project is targeting activation of the following product editions that can 
 Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some expired operating systems, as they are lacking of practical purpose. So if you want to implement long-term KMS activation on Windows 8.1 and earlier, please directly head over to the TSforge project (see the Open Source section).
 
 Similarly, when you already have a fairly complete or even the most feature-rich software edition, as a non-stamp-collecting enthusiast, you don't want to bother with other editions. For Windows, you are expected to use the Professional, Education or Enterprise edition (Datacenter for Windows Server). For Office, you are expected to use the LTSC Professional Plus edition. These editions are well supported for KMS activation, hence there is absolutely no need for you to trouble with Retail or less-featured editions that do not support KMS.
+
+
+# Configurations
+
+Currently, I do not want to make things complicated, and I only use a "product.txt" file to describe products that need to be activated. You need to create this file yourself, as I should not directly provide any convenience for illegal activations.
+
+The first line is the name of the SPP store file (data.dat) you want to patch. You can just enter a file name to indicate a file in the current directory, or you can provide the full file path. This determines whether you are activating for the local machine or another computer (in which case, you only need to copy over "data.dat").
+
+Next, you have to define each product's friendly name (optional), Application ID and SKU ID (also known as Activation ID). Find these IDs yourself and hint - Application IDs for Windows and Office are fixed as below.
+
+A complete example "product.txt" file is shown below, and of course you can process multiple products at once.
+
+```
+data.dat
+
+[Windows Server 2025 Datacenter]
+55c92734-d682-4d71-983e-d6ec3f16059f
+c052f164-cdf6-409a-a0cb-853ba0f0f55a
+
+[Office LTSC Professional Plus 2024]
+0ff1ce15-a989-479d-af46-f275c6370663
+8d368fc1-9470-4be2-8d66-90e836cbb051
+
+[Project Professional 2024]
+0ff1ce15-a989-479d-af46-f275c6370663
+fa187091-8246-47b1-964f-80a0b1e5d69a
+
+[Visio LTSC Professional 2024]
+0ff1ce15-a989-479d-af46-f275c6370663
+f510af75-8ab7-4426-a236-1bfb95c34ff8
+```
+
+You need to make sure that all required GVLKs have been inserted before processing the "data.dat" file. If you encounter a situation where the "data.dat" file is in use, please wait a while and try again. After you overwrite "data.dat", you must immediately run "slmgr.vbs /xpr" or "ospp.vbs /dstatus" to make the activation valid, but restart the PC is also a good option.
+
+By default, you can find "data.dat" in the "C:\Windows\System32\spp\store\2.0" directory, but if you want set to directly patch this file within "product.txt", you need to use the path "C:\Windows\Sysnative\spp\store\2.0\data.dat".
 
 
 # Usage examples
