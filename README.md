@@ -29,7 +29,7 @@ This project is targeting activation of the following product editions that can 
 
 - Office/Project/Visio 2021 and above
 
-Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some expired operating systems, as they are lacking of practical purpose. So if you want to implement long-term KMS activation on Windows 8.1 and earlier, please directly head over to the TSforge project (see the Open Source section).
+Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some expired operating systems, as they are lacking of practical purpose. So if you want to implement long-term KMS activation on Windows 8.1 and earlier, please directly head over to the TSforge project (see the Open source section).
 
 Similarly, when you already have a fairly complete or even the most feature-rich software edition, as a non-stamp-collecting enthusiast, you don't want to bother with other editions. For Windows, you are expected to use the Professional, Education or Enterprise edition (Datacenter for Windows Server). For Office, you are expected to use the LTSC Professional Plus edition. These editions are well supported for KMS activation, hence there is absolutely no need for you to trouble with Retail or less-featured editions that do not support KMS.
 
@@ -45,6 +45,8 @@ Microsoft KMS timestamp allows a maximum duration about approximately 4083 years
 We can then set the ideal grace period.
 
 By the way, I've tried to only tamper the timestamp without touching the corresponding activation data stored from a real KMS activation process, and it simply works. This perfectly proves that the minimum modification requirement for a long-term KMS only involves changing of three timestamps (a total of 24 bytes), as long as you have already gone through a legitimate KMS activation process and trying to turn it from a short-term (180-day) into a long-term (180 years or whatever).
+
+It is interesting to find that Windows automatically "acknowledges" the patched file by re-generate a legitimate "data.dat".
 
 
 # Configurations
