@@ -62,6 +62,26 @@ A complete example "product.txt" file is shown below, and of course you can proc
 ```
 data.dat
 
+[Windows 10 Pro]
+55c92734-d682-4d71-983e-d6ec3f16059f
+2de67392-b7a7-462a-b1ca-108dd189f588
+
+[Windows 10 Pro for Workstations]
+55c92734-d682-4d71-983e-d6ec3f16059f
+82bbc092-bc50-4e16-8e18-b74fc486aec3
+
+[Windows 10 Enterprise]
+55c92734-d682-4d71-983e-d6ec3f16059f
+73111121-5638-40f6-bc11-f1d7b0d64300
+
+[Windows 10 Pro Education]
+55c92734-d682-4d71-983e-d6ec3f16059f
+3f1afc82-f8ac-4f6c-8005-1d233e606eee
+
+[Windows 10 Education]
+55c92734-d682-4d71-983e-d6ec3f16059f
+e0c42288-980c-4788-a014-c080d2e1926e
+
 [Windows Server 2025 Datacenter]
 55c92734-d682-4d71-983e-d6ec3f16059f
 c052f164-cdf6-409a-a0cb-853ba0f0f55a
@@ -70,13 +90,13 @@ c052f164-cdf6-409a-a0cb-853ba0f0f55a
 0ff1ce15-a989-479d-af46-f275c6370663
 8d368fc1-9470-4be2-8d66-90e836cbb051
 
-[Project Professional 2024]
-0ff1ce15-a989-479d-af46-f275c6370663
-fa187091-8246-47b1-964f-80a0b1e5d69a
-
 [Visio LTSC Professional 2024]
 0ff1ce15-a989-479d-af46-f275c6370663
 f510af75-8ab7-4426-a236-1bfb95c34ff8
+
+[Project Professional 2024]
+0ff1ce15-a989-479d-af46-f275c6370663
+fa187091-8246-47b1-964f-80a0b1e5d69a
 ```
 
 You need to make sure that all required GVLKs have been inserted before processing the "data.dat" file. If you encounter a situation where the "data.dat" file is in use, please wait a while and try again. After you overwrite "data.dat", you must immediately run "slmgr.vbs /xpr" or "ospp.vbs /dstatus" to make the activation valid, but restart the PC is also a good option.
