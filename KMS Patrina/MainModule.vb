@@ -233,104 +233,114 @@ Module MainModule
 
     Public Function InsertDat(param1 As Byte(), param2 As String, param3 As String, param4 As Byte()) As Byte()
         Dim _loc_1 As New List(Of Byte)()
+        Dim _loc_19 As Boolean = False
         Using _loc_2 As New BinaryReader(New MemoryStream(param1))
-            Dim preHeader As Byte() = _loc_2.ReadBytes(8)
-            _loc_1.AddRange(preHeader)
-            Dim numKeys As UInteger = _loc_2.ReadUInt32()
-            _loc_1.AddRange(BitConverter.GetBytes(numKeys))
+            Dim _loc_3 As Byte() = _loc_2.ReadBytes(8)
+            _loc_1.AddRange(_loc_3)
+            Dim _loc_4 As UInteger = _loc_2.ReadUInt32()
+            _loc_1.AddRange(BitConverter.GetBytes(_loc_4))
 
-            For k As UInteger = 0 To numKeys - 1
-                Dim lenKeyName As UInteger = _loc_2.ReadUInt32()
-                Dim keyNameBytes As Byte() = _loc_2.ReadBytes(lenKeyName)
-                Dim keyName As String = System.Text.Encoding.Unicode.GetString(keyNameBytes)
-                Dim numValues As UInteger = _loc_2.ReadUInt32()
+            For _loc_5 As UInteger = 0 To _loc_4 - 1
+                Dim _loc_6 As UInteger = _loc_2.ReadUInt32()
+                Dim _loc_7 As Byte() = _loc_2.ReadBytes(_loc_6)
+                Dim _loc_12 As String = System.Text.Encoding.Unicode.GetString(_loc_7)
+                Dim _loc_8 As UInteger = _loc_2.ReadUInt32()
 
-                Dim mod4 As Integer = _loc_2.BaseStream.Position Mod 4
-                If mod4 <> 0 Then _loc_2.BaseStream.Seek(4 - mod4, SeekOrigin.Current)
+                Dim _loc_14 As Integer = _loc_2.BaseStream.Position Mod 4
+                If _loc_14 <> 0 Then _loc_2.BaseStream.Seek(4 - _loc_14, SeekOrigin.Current)
 
-                Dim valuesList As New List(Of Byte())()
-                Dim valueDeleted As Boolean = False
+                Dim _loc_9 As Boolean = False
+                Dim _loc_10 As New List(Of Byte())()
 
-                For v As UInteger = 0 To numValues - 1
-                    Dim blockType As UInt32 = _loc_2.ReadUInt32()
-                    Dim flags As UInt32 = _loc_2.ReadUInt32()
-                    Dim valueLen As UInt32 = _loc_2.ReadUInt32()
-                    Dim dataLen As UInt32 = _loc_2.ReadUInt32()
-                    Dim unknown As UInt32 = _loc_2.ReadUInt32()
-                    Dim valueBytes As Byte() = _loc_2.ReadBytes(valueLen)
-                    Dim dataBytes As Byte() = _loc_2.ReadBytes(dataLen)
+                For _loc_11 As UInteger = 0 To _loc_8 - 1
+                    Dim _loc_21 As UInt32 = _loc_2.ReadUInt32()
+                    Dim _loc_22 As UInt32 = _loc_2.ReadUInt32()
+                    Dim _loc_23 As UInt32 = _loc_2.ReadUInt32()
+                    Dim _loc_24 As UInt32 = _loc_2.ReadUInt32()
+                    Dim _loc_25 As UInt32 = _loc_2.ReadUInt32()
+                    Dim _loc_26 As Byte() = _loc_2.ReadBytes(_loc_23)
+                    Dim _loc_27 As Byte() = _loc_2.ReadBytes(_loc_24)
 
-                    mod4 = _loc_2.BaseStream.Position Mod 4
-                    If mod4 <> 0 Then _loc_2.BaseStream.Seek(4 - mod4, SeekOrigin.Current)
+                    _loc_14 = _loc_2.BaseStream.Position Mod 4
+                    If _loc_14 <> 0 Then _loc_2.BaseStream.Seek(4 - _loc_14, SeekOrigin.Current)
 
-                    Dim valueStr As String = System.Text.Encoding.Unicode.GetString(valueBytes)
+                    Dim _loc_13 As String = System.Text.Encoding.Unicode.GetString(_loc_26)
 
-                    If keyName.Substring(0, keyName.Length - 1) = param2 AndAlso valueStr.Substring(0, valueStr.Length - 1) = param3 Then
+                    'Not to append current Key if Product and Key both match
+                    If _loc_12.Substring(0, _loc_12.Length - 1) = param2 AndAlso _loc_13.Substring(0, _loc_13.Length - 1) = param3 Then
                         Console.WriteLine("Overwrite: " & param3)
-                        valueDeleted = True
+                        _loc_9 = True
                     Else
-                        Dim valueBlock As New List(Of Byte)()
-                        valueBlock.AddRange(BitConverter.GetBytes(blockType))
-                        valueBlock.AddRange(BitConverter.GetBytes(flags))
-                        valueBlock.AddRange(BitConverter.GetBytes(valueLen))
-                        valueBlock.AddRange(BitConverter.GetBytes(dataLen))
-                        valueBlock.AddRange(BitConverter.GetBytes(unknown))
-                        valueBlock.AddRange(valueBytes)
-                        valueBlock.AddRange(dataBytes)
+                        Dim _loc_20 As New List(Of Byte)()
+                        _loc_20.AddRange(BitConverter.GetBytes(_loc_21))
+                        _loc_20.AddRange(BitConverter.GetBytes(_loc_22))
+                        _loc_20.AddRange(BitConverter.GetBytes(_loc_23))
+                        _loc_20.AddRange(BitConverter.GetBytes(_loc_24))
+                        _loc_20.AddRange(BitConverter.GetBytes(_loc_25))
+                        _loc_20.AddRange(_loc_26)
+                        _loc_20.AddRange(_loc_27)
 
-                        Dim pad As Integer = (4 - (valueBlock.Count Mod 4)) Mod 4
-                        If pad > 0 Then valueBlock.AddRange(New Byte(pad - 1) {})
-                        valuesList.Add(valueBlock.ToArray())
+                        Dim _loc_15 As Integer = (4 - (_loc_20.Count Mod 4)) Mod 4
+                        If _loc_15 > 0 Then _loc_20.AddRange(New Byte(_loc_15 - 1) {})
+                        _loc_10.Add(_loc_20.ToArray())
                     End If
                 Next
 
-                _loc_1.AddRange(BitConverter.GetBytes(lenKeyName))
-                _loc_1.AddRange(keyNameBytes)
+                _loc_1.AddRange(BitConverter.GetBytes(_loc_6))
+                _loc_1.AddRange(_loc_7)
 
-                Dim newNumValues As UInteger = numValues
-                If keyName.Substring(0, keyName.Length - 1) = param2 AndAlso Not valueDeleted Then
-                    newNumValues += 1
+                Dim _loc_18 As UInteger = _loc_8
+                If _loc_12.Substring(0, _loc_12.Length - 1) = param2 AndAlso Not _loc_9 Then
+                    _loc_18 += 1
                 End If
-                _loc_1.AddRange(BitConverter.GetBytes(newNumValues))
+                _loc_1.AddRange(BitConverter.GetBytes(_loc_18))
 
-                mod4 = _loc_1.Count Mod 4
-                If mod4 <> 0 Then _loc_1.AddRange(New Byte(4 - mod4 - 1) {})
+                _loc_14 = _loc_1.Count Mod 4
+                If _loc_14 <> 0 Then _loc_1.AddRange(New Byte(4 - _loc_14 - 1) {})
 
-                For Each blk As Byte() In valuesList
-                    _loc_1.AddRange(blk)
+                For Each _loc_15 As Byte() In _loc_10
+                    _loc_1.AddRange(_loc_15)
                 Next
 
-                If keyName.Substring(0, keyName.Length - 1) = param2 Then
-                    Dim newValueBytes As Byte() = System.Text.Encoding.Unicode.GetBytes(param3 & ChrW(0))
-                    Dim typePlaceholder As UInt32 = 0
-                    Dim flagsPlaceholder As UInt32 = 0
-                    Dim valueLen As UInteger = newValueBytes.Length
-                    Dim dataLen As UInteger = param4.Length
-                    Dim unknown As UInteger = 0
+                'Append target Key if current Product matches target Product
+                If _loc_12.Substring(0, _loc_12.Length - 1) = param2 Then
+                    Dim _loc_36 As Byte() = System.Text.Encoding.Unicode.GetBytes(param3 & ChrW(0))
+                    Dim _loc_31 As UInt32 = 0
+                    Dim _loc_32 As UInt32 = 0
+                    Dim _loc_33 As UInteger = _loc_36.Length
+                    Dim _loc_34 As UInteger = param4.Length
+                    Dim _loc_35 As UInteger = 0
 
                     If param3.Contains("/store/") Then
-                        typePlaceholder = 1
-                        flagsPlaceholder = 1024
+                        _loc_31 = 1
+                        _loc_32 = 1024
                     ElseIf param3.Contains("/timer/") Then
-                        typePlaceholder = 3
-                        flagsPlaceholder = 4
+                        _loc_31 = 3
+                        _loc_32 = 4
                     End If
 
-                    _loc_1.AddRange(BitConverter.GetBytes(typePlaceholder))
-                    _loc_1.AddRange(BitConverter.GetBytes(flagsPlaceholder))
-                    _loc_1.AddRange(BitConverter.GetBytes(valueLen))
-                    _loc_1.AddRange(BitConverter.GetBytes(dataLen))
-                    _loc_1.AddRange(BitConverter.GetBytes(unknown))
-                    _loc_1.AddRange(newValueBytes)
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_31))
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_32))
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_33))
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_34))
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_35))
+                    _loc_1.AddRange(_loc_36)
                     _loc_1.AddRange(param4)
 
-                    mod4 = _loc_1.Count Mod 4
-                    If mod4 <> 0 Then _loc_1.AddRange(New Byte(4 - mod4 - 1) {})
+                    _loc_14 = _loc_1.Count Mod 4
+                    If _loc_14 <> 0 Then _loc_1.AddRange(New Byte(4 - _loc_14 - 1) {})
+
+                    'Only return new dat if Key actually modified
+                    _loc_19 = True
                 End If
             Next
         End Using
 
-        Return _loc_1.ToArray()
+        If _loc_19 Then
+            Return _loc_1.ToArray()
+        Else
+            Return param1
+        End If
     End Function
 
     Public Sub Raise(param1 As String)
