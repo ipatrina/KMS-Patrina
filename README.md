@@ -16,20 +16,20 @@ KMS Patrina implements practically permanent KMS activation for the latest Micro
 
 The advantage of using offline KMS activation with unlicensed Microsoft products is that it does not rely on the Internet or any third-party service, and covers the entire product line (Windows, Windows Server and Office), which is more appealing than any other known method. Copy-over and back "data.dat" is enough to activate other computers - they don't even need to run anything.
 
-For practical considerations, I've set the default grace period from 1900-01-01 to 2199-12-31, which covers all possibilities of intentional or unintentional system time adjustments, ensuring the activation won't drop. And I have totally no interest on things like setting the activation to the year AD 6100 just for fun.
+For practical considerations, I've set the default grace period from 1900-01-01 to 2199-12-31, which covers all possibilities of intentional or unintentional system time adjustments, ensuring the activation won't disappear. And I have totally no interest on things like setting the activation to the year AD 6100 just for fun.
 
 
 # System requirements
 
 This project is targeting activation of the following product editions that can have a GVLK installed:
 
-- Windows 10 and above
+- Windows 10 and above (minimum Windows 8.1)
 
-- Windows Server 2022 and above
+- Windows Server 2022 and above (minimum Windows Server 2012 R2)
 
-- Office/Project/Visio 2021 and above
+- Office/Project/Visio 2021 and above (minimum 2016 on listed OS)
 
-Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some expired operating systems, as they are lacking of practical purpose. So if you want to implement long-term KMS activation on Windows 8.1 and earlier, please directly head over to the TSforge project (see the Open source section).
+Unlike those stamp-collecting enthusiasts, I have absolutely no interest on some expired operating systems, as they are lacking of practical purpose. So if you want to implement long-term KMS activation on Windows 8.0 and earlier, please directly head over to the TSforge project (see the Open source section).
 
 Similarly, when you already have a fairly complete or even the most feature-rich software edition, as a non-stamp-collecting enthusiast, you don't want to bother with other editions. For Windows, you are expected to use the Professional, Education or Enterprise edition (Datacenter for Windows Server). For Office, you are expected to use the LTSC Professional Plus edition. These editions are well supported for KMS activation, hence there is absolutely no need for you to trouble with Retail or less-featured editions that do not support KMS.
 
@@ -60,7 +60,11 @@ Next, you have to define each product's friendly name (optional), Application ID
 A complete example "product.txt" file is shown below, and of course you can process multiple products at once.
 
 ```
-data.dat
+C:\Windows\Sysnative\spp\store\2.0\data.dat
+
+[Windows 8.1 Pro with Media Center]
+55c92734-d682-4d71-983e-d6ec3f16059f
+096ce63d-4fac-48a9-82a9-61ae9e800e5f
 
 [Windows 10 Pro]
 55c92734-d682-4d71-983e-d6ec3f16059f
@@ -82,9 +86,17 @@ data.dat
 55c92734-d682-4d71-983e-d6ec3f16059f
 e0c42288-980c-4788-a014-c080d2e1926e
 
+[Windows Server 2012 R2 Datacenter]
+55c92734-d682-4d71-983e-d6ec3f16059f
+00091344-1ea4-4f37-b789-01750ba6988c
+
 [Windows Server 2025 Datacenter]
 55c92734-d682-4d71-983e-d6ec3f16059f
 c052f164-cdf6-409a-a0cb-853ba0f0f55a
+
+[Office 2016 Professional Plus]
+0ff1ce15-a989-479d-af46-f275c6370663
+d450596f-894d-49e0-966a-fd39ed4c4c64
 
 [Office LTSC Professional Plus 2024]
 0ff1ce15-a989-479d-af46-f275c6370663
