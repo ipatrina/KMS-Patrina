@@ -161,12 +161,14 @@ cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Progra
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul-oob.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
-
+```
+```
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ppd.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:FQQ23-N4YCY-73HQ3-FM9WC-76HF4
-
+```
+```
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ppd.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul.xrm-ms"
 cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
@@ -225,7 +227,7 @@ Activation Type Configuration: ALL
 
 # Open source
 
-KMS Patrina is a re-implementation of the KMS4k activation method in project TSforge. All its core data comes from the following project:
+KMS Patrina is a re-implementation of the KMS4k activation method in project TSforge. Almost all of its core data comes from the following project:
 
 https://github.com/massgravel/TSforge
 
