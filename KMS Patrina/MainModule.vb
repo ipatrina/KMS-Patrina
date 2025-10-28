@@ -1,17 +1,11 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Text.RegularExpressions
 
 Module MainModule
 
     Public ReadOnly SPP_RSA_KEY_PRODUCTION() As Byte = {&H7, &H2, &H0, &H0, &H0, &HA4, &H0, &H0, &H52, &H53, &H41, &H32, &H0, &H4, &H0, &H0, &H1, &H0, &H1, &H0, &H29, &H87, &HBA, &H3F, &H52, &H90, &H57, &HD8, &H12, &H26, &H6B, &H38, &HB2, &H3B, &HF9, &H67, &H8, &H4F, &HDD, &H8B, &HF5, &HE3, &H11, &HB8, &H61, &H3A, &H33, &H42, &H51, &H65, &H5, &H86, &H1E, &H0, &H41, &HDE, &HC5, &HDD, &H44, &H60, &H56, &H3D, &H14, &H39, &HB7, &H43, &H65, &HE9, &HF7, &H2B, &HA5, &HF0, &HA3, &H65, &H68, &HE9, &HE4, &H8B, &H5C, &H3, &H2D, &H36, &HFE, &H28, &H4C, &HD1, &H3C, &H3D, &HC1, &H90, &H75, &HF9, &H6E, &H2, &HE0, &H58, &H97, &H6A, &HCA, &H80, &H2, &H42, &H3F, &H6C, &H15, &H85, &H4D, &H83, &H23, &H6A, &H95, &H9E, &H38, &H52, &H59, &H38, &H6A, &H99, &HF0, &HB5, &HCD, &H53, &H7E, &H8, &H7C, &HB5, &H51, &HD3, &H8F, &HA3, &HD, &HA0, &HFA, &H8D, &H87, &H3C, &HFC, &H59, &H21, &HD8, &H2E, &HD9, &H97, &H8B, &H40, &H60, &HB1, &HD7, &H2B, &HA, &H6E, &H60, &HB5, &H50, &HCC, &H3C, &HB1, &H57, &HE4, &HB7, &HDC, &H5A, &H4D, &HE1, &H5C, &HE0, &H94, &H4C, &H5E, &H28, &HFF, &HFA, &H80, &H6A, &H13, &H53, &H52, &HDB, &HF3, &H4, &H92, &H43, &H38, &HB9, &H1B, &HD9, &H85, &H54, &H7B, &H14, &HC7, &H89, &H16, &H8A, &H4B, &H82, &HA1, &H8, &H2, &H99, &H23, &H48, &HDD, &H75, &H9C, &HC8, &HC1, &HCE, &HB0, &HD7, &H1B, &HD8, &HFB, &H2D, &HA7, &H2E, &H47, &HA7, &H18, &H4B, &HF6, &H29, &H69, &H44, &H30, &H33, &HBA, &HA7, &H1F, &HCE, &H96, &H9E, &H40, &HE1, &H43, &HF0, &HE0, &HD, &HA, &H32, &HB4, &HEE, &HA1, &HC3, &H5E, &H9B, &HC7, &H7F, &HF5, &H9D, &HD8, &HF2, &HF, &HD9, &H8F, &HAD, &H75, &HA, &H0, &HD5, &H25, &H43, &HF7, &HAE, &H51, &H7F, &HB7, &HDE, &HB7, &HAD, &HFB, &HCE, &H83, &HE1, &H81, &HFF, &HDD, &HA2, &H77, &HFE, &HEB, &H27, &H1F, &H10, &HFA, &H82, &H37, &HF4, &H7E, &HCC, &HE2, &HA1, &H58, &HC8, &HAF, &H1D, &H1A, &H81, &H31, &H6E, &HF4, &H8B, &H63, &H34, &HF3, &H5, &HF, &HE1, &HCC, &H15, &HDC, &HA4, &H28, &H7A, &H9E, &HEB, &H62, &HD8, &HD8, &H8C, &H85, &HD7, &H7, &H87, &H90, &H2F, &HF7, &H1C, &H56, &H85, &H2F, &HEF, &H32, &H37, &H7, &HAB, &HB0, &HE6, &HB5, &H2, &H19, &H35, &HAF, &HDB, &HD4, &HA2, &H9C, &H36, &H80, &HC6, &HDC, &H82, &H8, &HE0, &HC0, &H5F, &H3C, &H59, &HAA, &H4E, &H26, &H3, &H29, &HB3, &H62, &H58, &H41, &H59, &H3A, &H37, &H43, &H35, &HE3, &H9F, &H34, &HE2, &HA1, &H4, &H97, &H12, &H9D, &H8C, &HAD, &HF7, &HFB, &H8C, &HA1, &HA2, &HE9, &HE4, &HEF, &HD9, &HC5, &HE5, &HDF, &HE, &HBF, &H4A, &HE0, &H7A, &H1E, &H10, &H50, &H58, &H63, &H51, &HE1, &HD4, &HFE, &H57, &HB0, &H9E, &HD7, &HDA, &H8C, &HED, &H7D, &H82, &HAC, &H2F, &H25, &H58, &HA, &H58, &HE6, &HA4, &HF4, &H57, &H4B, &HA4, &H1B, &H65, &HB9, &H4A, &H87, &H46, &HEB, &H8C, &HF, &H9A, &H48, &H90, &HF9, &H9F, &H76, &H69, &H3, &H72, &H77, &HEC, &HC1, &H42, &H4C, &H87, &HDB, &HB, &H3C, &HD4, &H74, &HEF, &HE5, &H34, &HE0, &H32, &H45, &HB0, &HF8, &HAB, &HD5, &H26, &H21, &HD7, &HD2, &H98, &H54, &H8F, &H64, &H88, &H20, &H2B, &H14, &HE3, &H82, &HD5, &H2A, &H4B, &H8F, &H4E, &H35, &H20, &H82, &H7E, &H1B, &HFE, &HFA, &H2C, &H79, &H6C, &H6E, &H66, &H94, &HBB, &HA, &HEB, &HBA, &HD9, &H70, &H61, &HE9, &H47, &HB5, &H82, &HFC, &H18, &H3C, &H66, &H3A, &H9, &H2E, &H1F, &H61, &H74, &HCA, &HCB, &HF6, &H7A, &H52, &H37, &H1D, &HAC, &H8D, &H63, &H69, &H84, &H8E, &HC7, &H70, &H59, &HDD, &H2D, &H91, &H1E, &HF7, &HB1, &H56, &HED, &H7A, &H6, &H9D, &H5B, &H33, &H15, &HDD, &H31, &HD0, &HE6, &H16, &H7, &H9B, &HA5, &H94, &H6, &H7D, &HC1, &HE9, &HD6, &HC8, &HAF, &HB4, &H1E, &H2D, &H88, &H6, &HA7, &H63, &HB8, &HCF, &HC8, &HA2, &H6E, &H84, &HB3, &H8D, &HE5, &H47, &HE6, &H13, &H63, &H8E, &HD1, &H7F, &HD4, &H81, &H44, &H38, &HBF}
-
-    Public Enum BlockType As UInteger
-        NONE
-        NAMED
-        ATTRIBUTE
-        TIMER
-    End Enum
 
     Sub Main()
         Try
@@ -53,55 +47,63 @@ Module MainModule
                 Raise("HMAC-SHA1 verification failed.")
             End If
 
-            'DumpDat(_loc_14)
-
-            Dim _loc_6 As New List(Of String)
-            Dim _loc_21 As New List(Of String)
-            For _loc_7 As Integer = 1 To _loc_2.Count - 1
-                If _loc_2(_loc_7).StartsWith("[") And _loc_2(_loc_7).EndsWith("]") Then
-                    _loc_21.Add(_loc_2(_loc_7).Substring(1, _loc_2(_loc_7).Length - 2).Trim())
-                ElseIf _loc_2(_loc_7).Length = 36 Then
-                    _loc_6.Add(_loc_2(_loc_7))
-                End If
-            Next
-            If _loc_6.Count < 2 Then
-                Raise("Cannot find product ID.")
-            End If
-            If _loc_6.Count Mod 2 <> 0 Then _loc_6.RemoveAt(_loc_6.Count - 1)
-
-            Dim _loc_9 As Boolean = False
-            For _loc_8 As Integer = 0 To _loc_6.Count / 2 - 1
-                Dim SkuID As String = _loc_6(_loc_8 * 2 + 1)
-                Dim ApplicationID As String = _loc_6(_loc_8 * 2)
-
-                If ApplicationID.Length <> 36 Then Raise("Invalid Application ID.")
-                If SkuID.Length <> 36 Then Raise("Invalid Product SKU ID.")
-
-                Console.WriteLine()
-                If _loc_21.Count - 1 >= _loc_8 Then Console.WriteLine(_loc_21(_loc_8))
-                Console.WriteLine("Application ID: " & ApplicationID)
-                Console.WriteLine("Product SKU ID: " & SkuID)
-
-                Dim _loc_15 As Byte() = InsertDat(_loc_14, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/store/" & ApplicationID & "/" & SkuID, HexToBytes("387987E2040000000000000004010000000006005600F141792FB84F65E222B7F5E0D70E79D977DE6FDC4C29C0BE4AC89EDB63322B8B2F119C9039B6DA99B62BE7EC938751A73B1E371986AC668AA6F451848CC6C33F3E58D3C21336947FE663DC4C45B9918FD9DE0A08ED6643C9BD36DEAD395BD53F902FFF347FA2290450C0AEF81F210AEB310EC9F94926BC9432E992FBA9712D618F62C10D1FB41CDD9707289FD535B2109BCB45FD32CF2FEBFF5258CDCE4260B3D99F3E3641B30BC3998CEF4853E0B7CD69FCF30275D4628DC240A92952ED3F3D8558742C31A71F082135D95F2F6B318D365DE0225EF2E29D5A7400C927F4F9450042EFC7E1383AEFEEDF5F56FB8BB09E185605A839EAA3E7630DFEB1357000000000456E44E60200000000000000360000006D007300660074003A0072006D002F0061006C0067006F0072006900740068006D002F0068007700690064002F0034002E003000000000002CC01225040000002C00000026000000530070007000420069006E00640069006E0067004C006900630065006E007300650044006100740061000000000000002600000000001C000000000000000000000000000000000000000000000000000000010C01000000945F4C0B0200000000000000020000000000000000000000945F4C0B0200000000000000020000000000000000000000"))
-                Dim _loc_16 As Byte() = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/timer/" & ApplicationID & "/" & SkuID, HexToBytes("00000000000000000044B8DE940800000044B8DE94080000007069369C080000"))
-
-                If _loc_16.SequenceEqual(_loc_14) Then
-                    Console.WriteLine("Product status not updated.")
-                Else
-                    _loc_14 = _loc_16
-                    Console.WriteLine("Product status updated.")
-                    _loc_9 = True
-                End If
-            Next
-
-            'DumpDat(_loc_14)
-
-            If _loc_9 Then
-                My.Computer.FileSystem.DeleteFile(_loc_4)
-                My.Computer.FileSystem.WriteAllBytes(_loc_4, EncryptDat(_loc_14), False)
-                Console.WriteLine(vbCrLf & "File has been updated.")
+            If File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "dump.txt")) Then
+                DumpDat(_loc_14)
             Else
-                Console.WriteLine(vbCrLf & "File is not touched.")
+                Dim _loc_6 As New List(Of String)
+                Dim _loc_21 As New List(Of String)
+                For _loc_7 As Integer = 1 To _loc_2.Count - 1
+                    If _loc_2(_loc_7).StartsWith("[") And _loc_2(_loc_7).EndsWith("]") Then
+                        _loc_21.Add(_loc_2(_loc_7).Substring(1, _loc_2(_loc_7).Length - 2).Trim())
+                    ElseIf _loc_2(_loc_7).Length = 36 Then
+                        _loc_6.Add(_loc_2(_loc_7))
+                    End If
+                Next
+                If _loc_6.Count < 2 Then
+                    Raise("Cannot find product ID.")
+                End If
+                If _loc_6.Count Mod 2 <> 0 Then _loc_6.RemoveAt(_loc_6.Count - 1)
+
+                Dim _loc_9 As Boolean = False
+                For _loc_8 As Integer = 0 To _loc_6.Count / 2 - 1
+                    Dim SkuID As String = _loc_6(_loc_8 * 2 + 1)
+                    Dim ApplicationID As String = _loc_6(_loc_8 * 2)
+
+                    If ApplicationID.Length <> 36 Then Raise("Invalid Application ID.")
+                    If SkuID.Length <> 36 Then Raise("Invalid Product SKU ID.")
+
+                    Console.WriteLine()
+                    If _loc_21.Count - 1 >= _loc_8 Then Console.WriteLine(_loc_21(_loc_8))
+                    Console.WriteLine("Application ID: " & ApplicationID)
+                    Console.WriteLine("Product SKU ID: " & SkuID)
+
+                    Dim _loc_17 As String = GetHexFromFile(Path.Combine(Directory.GetCurrentDirectory(), "store.txt"))
+                    Dim _loc_18 As String = GetHexFromFile(Path.Combine(Directory.GetCurrentDirectory(), "timer.txt"))
+                    If Not (_loc_17.Length > 0 AndAlso _loc_17.Length Mod 2 = 0) Then _loc_17 = "D981D5DB04000000000000000401000000000600FCC59F2C994CA27A9563894C00A8996B1278690B8AF88693805CA3FF466337C9F452BBC74582B060BF4DA12978C3EB8E1D91C73A637A8B50F45C344C69AACD40C181A038D3D4ACA6587154D611ACA0D3FE279570926DD84D9AA0F9ED17D0418337813D43E2CB7173762217C67AFBA77A953CD44DF378C5C24EDBA5AF107CDEA4D7276FD81C28314A9B84BEE73CF171A11FF426B646CA550FD01883ECCEEFC194FEA7EB753442E28CF66A5AD54A4944C560D5D81B2D819F05E79561BE5FFA5D316207FAC9F0EB46DB4343DFD19DDB2CAF33A2FAD4FA957BECEBE892083B9ABB69081E628770EE7582A3B227218F700B8BEB662846C170A4D1553224CB0F18CBF200000000456E44E60200000000000000360000006D007300660074003A0072006D002F0061006C0067006F0072006900740068006D002F0068007700690064002F0034002E003000000000002CC01225040000002C00000026000000530070007000420069006E00640069006E0067004C006900630065006E007300650044006100740061000000000000002600000000001C000000000000000000000000000000000000000000000000000000010C01000000945F4C0B0200000000000000020000000000000000000000945F4C0B0200000000000000020000000000000000000000"
+                    If Not (_loc_18.Length > 0 AndAlso _loc_18.Length Mod 2 = 0) Then _loc_18 = "00000000000000000044B8DE940800000044B8DE94080000007069369C080000"
+
+                    Dim _loc_15 As Byte() = _loc_14
+                    If _loc_17.Length >= 16 Then _loc_15 = InsertDat(_loc_14, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/store/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_17))
+                    Dim _loc_16 As Byte() = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/timer/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_18))
+
+                    If _loc_16.SequenceEqual(_loc_14) Then
+                        Console.WriteLine("Product status not updated.")
+                    Else
+                        _loc_14 = _loc_16
+                        Console.WriteLine("Product status updated.")
+                        _loc_9 = True
+                    End If
+                Next
+
+                'DumpDat(_loc_14)
+
+                If _loc_9 Then
+                    My.Computer.FileSystem.DeleteFile(_loc_4)
+                    My.Computer.FileSystem.WriteAllBytes(_loc_4, EncryptDat(_loc_14), False)
+                    Console.WriteLine(vbCrLf & "File has been updated.")
+                Else
+                    Console.WriteLine(vbCrLf & "File is not touched.")
+                End If
             End If
 
             Console.WriteLine(vbCrLf)
@@ -159,37 +161,47 @@ Module MainModule
 
     Public Sub DumpDat(param1 As Byte())
         Using _loc_1 As New BinaryReader(New MemoryStream(param1))
-            Dim preHeader As Byte() = _loc_1.ReadBytes(8)
-            Console.WriteLine("Pre-Header: 0x" & BytesToHex(preHeader))
-
+            Console.WriteLine("Pre-Header: 0x" & BytesToHex(_loc_1.ReadBytes(8)))
             Console.WriteLine("Section:")
-            Dim numKeys As UInteger = _loc_1.ReadUInt32()
-            Console.WriteLine("  NumKeys: " & numKeys)
+            Dim _loc_2 As UInteger = _loc_1.ReadUInt32()
+            Console.WriteLine("  NumKeys: " & _loc_2)
 
-            For k As UInteger = 0 To numKeys - 1
-                Dim lenKeyName As UInteger = _loc_1.ReadUInt32()
-                Dim keyName As String = BytesToString(_loc_1.ReadBytes(lenKeyName))
-                Dim numValues As UInteger = _loc_1.ReadUInt32()
-                Console.WriteLine($"  Key: {keyName}, NumValues: {numValues}")
+            For _loc_3 As UInteger = 0 To _loc_2 - 1
+                Dim _loc_4 As String = BytesToString(_loc_1.ReadBytes(_loc_1.ReadUInt32()))
+                Dim _loc_5 As UInteger = _loc_1.ReadUInt32()
+                Console.WriteLine($"  Key: {_loc_4}, NumValues: {_loc_5}")
+                Dim _loc_14 As Integer = _loc_1.BaseStream.Position Mod 4
+                If _loc_14 <> 0 Then _loc_1.BaseStream.Seek(4 - _loc_14, SeekOrigin.Current)
 
-                Dim mod4 As Integer = _loc_1.BaseStream.Position Mod 4
-                If mod4 <> 0 Then _loc_1.BaseStream.Seek(4 - mod4, SeekOrigin.Current)
+                For _loc_6 As UInteger = 0 To _loc_5 - 1
+                    Dim _loc_7 As UInteger = _loc_1.ReadUInt32()
+                    Dim _loc_8 As UInteger = _loc_1.ReadUInt32()
+                    Dim _loc_9 As UInteger = _loc_1.ReadUInt32()
+                    Dim _loc_10 As UInteger = _loc_1.ReadUInt32()
+                    Dim _loc_11 As UInteger = _loc_1.ReadUInt32()
+                    Dim _loc_12 As Byte() = _loc_1.ReadBytes(_loc_9)
+                    Dim _loc_13 As Byte() = _loc_1.ReadBytes(_loc_10)
 
-                For v As UInteger = 0 To numValues - 1
-                    Dim blockType As BlockType = _loc_1.ReadUInt32()
-                    Dim flags As UInteger = _loc_1.ReadUInt32()
-                    Dim valueLen As UInteger = _loc_1.ReadUInt32()
-                    Dim dataLen As UInteger = _loc_1.ReadUInt32()
-                    Dim unknown As UInteger = _loc_1.ReadUInt32()
-                    Dim value As Byte() = _loc_1.ReadBytes(valueLen)
-                    Dim data As Byte() = _loc_1.ReadBytes(dataLen)
+                    Dim _loc_15 As String = "UNKNOWN"
+                    Select Case _loc_7
+                        Case 0
+                            _loc_15 = "NONE"
+                        Case 1
+                            _loc_15 = "NAMED"
+                        Case 2
+                            _loc_15 = "ATTRIBUTE"
+                        Case 3
+                            _loc_15 = "TIMER"
+                        Case Else
+                            _loc_15 = "UNKNOWN"
+                    End Select
 
-                    Console.WriteLine($"    Block {v + 1}: Type={blockType}, Flags={flags}, Unknown={unknown}")
-                    Console.WriteLine($"      Value: {BytesToString(value)}")
-                    Console.WriteLine($"      Data: {BytesToHex(data)}")
+                    Console.WriteLine($"    Block {_loc_6 + 1}: Type={_loc_15}, Flags={_loc_8}, Unknown={_loc_11}")
+                    Console.WriteLine($"      Value: {BytesToString(_loc_12)}")
+                    Console.WriteLine($"      Data: {BytesToHex(_loc_13)}")
 
-                    mod4 = CInt(_loc_1.BaseStream.Position Mod 4)
-                    If mod4 <> 0 Then _loc_1.BaseStream.Seek(4 - mod4, SeekOrigin.Current)
+                    _loc_14 = _loc_1.BaseStream.Position Mod 4
+                    If _loc_14 <> 0 Then _loc_1.BaseStream.Seek(4 - _loc_14, SeekOrigin.Current)
                 Next
             Next
         End Using
@@ -215,6 +227,14 @@ Module MainModule
             End Using
             Return _loc_9.ToArray()
         End Using
+    End Function
+
+    Private Function GetHexFromFile(param1 As String) As String
+        If File.Exists(param1) Then
+            Return Regex.Replace(File.ReadAllText(param1), "[^0-9A-Fa-f]", "")
+        Else
+            Return ""
+        End If
     End Function
 
     Public Function HexToBytes(param1 As String) As Byte()

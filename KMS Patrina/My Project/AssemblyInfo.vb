@@ -28,5 +28,5 @@ Imports System.Runtime.InteropServices
 '      修订号
 '
 
-<Assembly: AssemblyVersion("10.1.0.2510")>
-<Assembly: AssemblyFileVersion("10.1.0.2510")>
+<Assembly: AssemblyVersion("10.2.0.2510")>
+<Assembly: AssemblyFileVersion("10.2.0.2510")>
