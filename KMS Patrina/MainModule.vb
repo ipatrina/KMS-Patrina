@@ -79,21 +79,36 @@ Module MainModule
 
                     Dim _loc_17 As String = GetHexFromFile(Path.Combine(Directory.GetCurrentDirectory(), "store.txt"))
                     Dim _loc_18 As String = GetHexFromFile(Path.Combine(Directory.GetCurrentDirectory(), "timer.txt"))
-                    If Not (_loc_17.Length > 0 AndAlso _loc_17.Length Mod 2 = 0) Then _loc_17 = "D981D5DB04000000000000000401000000000600FCC59F2C994CA27A9563894C00A8996B1278690B8AF88693805CA3FF466337C9F452BBC74582B060BF4DA12978C3EB8E1D91C73A637A8B50F45C344C69AACD40C181A038D3D4ACA6587154D611ACA0D3FE279570926DD84D9AA0F9ED17D0418337813D43E2CB7173762217C67AFBA77A953CD44DF378C5C24EDBA5AF107CDEA4D7276FD81C28314A9B84BEE73CF171A11FF426B646CA550FD01883ECCEEFC194FEA7EB753442E28CF66A5AD54A4944C560D5D81B2D819F05E79561BE5FFA5D316207FAC9F0EB46DB4343DFD19DDB2CAF33A2FAD4FA957BECEBE892083B9ABB69081E628770EE7582A3B227218F700B8BEB662846C170A4D1553224CB0F18CBF200000000456E44E60200000000000000360000006D007300660074003A0072006D002F0061006C0067006F0072006900740068006D002F0068007700690064002F0034002E003000000000002CC01225040000002C00000026000000530070007000420069006E00640069006E0067004C006900630065006E007300650044006100740061000000000000002600000000001C000000000000000000000000000000000000000000000000000000010C01000000945F4C0B0200000000000000020000000000000000000000945F4C0B0200000000000000020000000000000000000000"
+                    Dim _loc_19 As String = GetHexFromFile(Path.Combine(Directory.GetCurrentDirectory(), "rearm.txt"))
+                    If Not (_loc_17.Length > 0 AndAlso _loc_17.Length Mod 2 = 0) Then _loc_17 = "28655C830400000000000000040100000000060082D3FF4325532655E1D2CE276EA7E6D50098265865D81A22779AB695304A26A07F9BF97BD9C567D5272A35B2CDC9C8177AB7204573BF640D3A097499A56FA4CFE2A3D07AA7241C3C25F4C9110C0B724300692C49054368BCBD71AE35091CA87C859CF18C04F445DEA7369F77C5D036E179CC5FE675E998F4E45DA0DE6E891FD453FC7DFD46E2E95BF2C7CA035BE8B71DCD7DFF86FEBCD8C31F299EEDE3B9A267CB9F8E53BDD5FDA955AB5157F90CFC5EC1EA3EFCA30B04F66D8FEC6A8DECAB5E82F4C75CAB94B65A28789E23A2AC4EE8B321E7E17E7FCF80C708F4F4BB63B06FC7A5422A1AEDBD85F60B9DCCF3C109E903720933F4885CD938F829979A07B1AE00000000456E44E60200000000000000360000006D007300660074003A0072006D002F0061006C0067006F0072006900740068006D002F0068007700690064002F0034002E003000000000002CC01225040000002C00000026000000530070007000420069006E00640069006E0067004C006900630065006E007300650044006100740061000000000000002600000000001C000000000000000000000000000000000000000000000000000000010C01000000945F4C0B0200000000000000020000000000000000000000945F4C0B0200000000000000020000000000000000000000"
                     If Not (_loc_18.Length > 0 AndAlso _loc_18.Length Mod 2 = 0) Then _loc_18 = "00000000000000000044B8DE940800000044B8DE94080000007069369C080000"
 
                     Dim _loc_15 As Byte() = _loc_14
-                    If _loc_17.Length >= 16 Then _loc_15 = InsertDat(_loc_14, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/store/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_17))
-                    Dim _loc_16 As Byte() = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/timer/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_18))
+                    If _loc_17.Length >= 16 Then _loc_15 = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/store/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_17))
+                    _loc_15 = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "msft:spp/kms/bind/2.0/timer/" & ApplicationID & "/" & SkuID, HexToBytes(_loc_18))
+                    If _loc_19.Length >= 16 Then
+                        _loc_15 = InsertDat(_loc_15, "SPPSVC\" & ApplicationID, "__##USERSEP-RESERVED##__$$REARM-COUNT$$", HexToBytes(_loc_19))
+                        _loc_15 = InsertDat(_loc_15, "SPPSVC\" & ApplicationID & "\" & SkuID, "__##USERSEP-RESERVED##__$$REARM-COUNT$$", HexToBytes(_loc_19))
+                    End If
 
-                    If _loc_16.SequenceEqual(_loc_14) Then
+                    If _loc_15.SequenceEqual(_loc_14) Then
                         Console.WriteLine("Product status not updated.")
                     Else
-                        _loc_14 = _loc_16
+                        _loc_14 = _loc_15
                         Console.WriteLine("Product status updated.")
                         _loc_9 = True
                     End If
                 Next
+
+                Dim _loc_31 As String = GetStringFromFile(Path.Combine(Directory.GetCurrentDirectory(), "delete.txt"))
+                If _loc_31.Length >= 16 Then
+                    Dim _loc_32 As Byte() = _loc_14
+                    _loc_32 = InsertDat(_loc_32, _loc_31, "", New Byte() {})
+                    If Not _loc_32.SequenceEqual(_loc_14) Then
+                        _loc_14 = _loc_32
+                        _loc_9 = True
+                    End If
+                End If
 
                 'DumpDat(_loc_14)
 
@@ -237,6 +252,14 @@ Module MainModule
         End If
     End Function
 
+    Private Function GetStringFromFile(param1 As String) As String
+        If File.Exists(param1) Then
+            Return File.ReadAllText(param1).Trim()
+        Else
+            Return ""
+        End If
+    End Function
+
     Public Function HexToBytes(param1 As String) As Byte()
         Return Enumerable.Range(0, param1.Length).Where(Function(x) x Mod 2 = 0).[Select](Function(x) Convert.ToByte(param1.Substring(x, 2), 16)).ToArray()
     End Function
@@ -260,10 +283,11 @@ Module MainModule
             Dim _loc_4 As UInteger = _loc_2.ReadUInt32()
             _loc_1.AddRange(BitConverter.GetBytes(_loc_4))
 
+            'Iterate Product
             For _loc_5 As UInteger = 0 To _loc_4 - 1
                 Dim _loc_6 As UInteger = _loc_2.ReadUInt32()
                 Dim _loc_7 As Byte() = _loc_2.ReadBytes(_loc_6)
-                Dim _loc_12 As String = System.Text.Encoding.Unicode.GetString(_loc_7)
+                Dim _loc_12 As String = Encoding.Unicode.GetString(_loc_7)
                 Dim _loc_8 As UInteger = _loc_2.ReadUInt32()
 
                 Dim _loc_14 As Integer = _loc_2.BaseStream.Position Mod 4
@@ -272,6 +296,7 @@ Module MainModule
                 Dim _loc_9 As Boolean = False
                 Dim _loc_10 As New List(Of Byte())()
 
+                'Iterate Key
                 For _loc_11 As UInteger = 0 To _loc_8 - 1
                     Dim _loc_21 As UInt32 = _loc_2.ReadUInt32()
                     Dim _loc_22 As UInt32 = _loc_2.ReadUInt32()
@@ -284,7 +309,7 @@ Module MainModule
                     _loc_14 = _loc_2.BaseStream.Position Mod 4
                     If _loc_14 <> 0 Then _loc_2.BaseStream.Seek(4 - _loc_14, SeekOrigin.Current)
 
-                    Dim _loc_13 As String = System.Text.Encoding.Unicode.GetString(_loc_26)
+                    Dim _loc_13 As String = Encoding.Unicode.GetString(_loc_26)
 
                     'Not to append current Key if Product and Key both match
                     If _loc_12.Substring(0, _loc_12.Length - 1) = param2 AndAlso _loc_13.Substring(0, _loc_13.Length - 1) = param3 Then
@@ -306,52 +331,65 @@ Module MainModule
                     End If
                 Next
 
-                _loc_1.AddRange(BitConverter.GetBytes(_loc_6))
-                _loc_1.AddRange(_loc_7)
+                If param3.Length = 0 AndAlso param4.Length = 0 AndAlso _loc_12.Substring(0, _loc_12.Length - 1) = param2 Then
+                    'Delete Product
+                    Console.WriteLine(vbCrLf & param2 & " deleted.")
+                    _loc_1.RemoveRange(8, 4)
+                    _loc_1.InsertRange(8, BitConverter.GetBytes(Convert.ToUInt32(_loc_4 - 1)))
+                    _loc_19 = True
+                Else
+                    'Begin rebuild current Product
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_6))
+                    _loc_1.AddRange(_loc_7)
 
-                Dim _loc_18 As UInteger = _loc_8
-                If _loc_12.Substring(0, _loc_12.Length - 1) = param2 AndAlso Not _loc_9 Then
-                    _loc_18 += 1
-                End If
-                _loc_1.AddRange(BitConverter.GetBytes(_loc_18))
-
-                _loc_14 = _loc_1.Count Mod 4
-                If _loc_14 <> 0 Then _loc_1.AddRange(New Byte(4 - _loc_14 - 1) {})
-
-                For Each _loc_15 As Byte() In _loc_10
-                    _loc_1.AddRange(_loc_15)
-                Next
-
-                'Append target Key if current Product matches target Product
-                If _loc_12.Substring(0, _loc_12.Length - 1) = param2 Then
-                    Dim _loc_36 As Byte() = System.Text.Encoding.Unicode.GetBytes(param3 & ChrW(0))
-                    Dim _loc_31 As UInt32 = 0
-                    Dim _loc_32 As UInt32 = 0
-                    Dim _loc_33 As UInteger = _loc_36.Length
-                    Dim _loc_34 As UInteger = param4.Length
-                    Dim _loc_35 As UInteger = 0
-
-                    If param3.Contains("/store/") Then
-                        _loc_31 = 1
-                        _loc_32 = 1024
-                    ElseIf param3.Contains("/timer/") Then
-                        _loc_31 = 3
-                        _loc_32 = 4
+                    Dim _loc_18 As UInteger = _loc_8
+                    If _loc_12.Substring(0, _loc_12.Length - 1) = param2 AndAlso Not _loc_9 Then
+                        _loc_18 += 1
                     End If
-
-                    _loc_1.AddRange(BitConverter.GetBytes(_loc_31))
-                    _loc_1.AddRange(BitConverter.GetBytes(_loc_32))
-                    _loc_1.AddRange(BitConverter.GetBytes(_loc_33))
-                    _loc_1.AddRange(BitConverter.GetBytes(_loc_34))
-                    _loc_1.AddRange(BitConverter.GetBytes(_loc_35))
-                    _loc_1.AddRange(_loc_36)
-                    _loc_1.AddRange(param4)
+                    _loc_1.AddRange(BitConverter.GetBytes(_loc_18))
 
                     _loc_14 = _loc_1.Count Mod 4
                     If _loc_14 <> 0 Then _loc_1.AddRange(New Byte(4 - _loc_14 - 1) {})
 
-                    'Only return new dat if Key actually modified
-                    _loc_19 = True
+                    'Append Keys
+                    For Each _loc_15 As Byte() In _loc_10
+                        _loc_1.AddRange(_loc_15)
+                    Next
+
+                    'Append target Key if current Product matches target Product
+                    If _loc_12.Substring(0, _loc_12.Length - 1) = param2 Then
+                        Dim _loc_36 As Byte() = System.Text.Encoding.Unicode.GetBytes(param3 & ChrW(0))
+                        Dim _loc_31 As UInt32 = 0
+                        Dim _loc_32 As UInt32 = 0
+                        Dim _loc_33 As UInteger = _loc_36.Length
+                        Dim _loc_34 As UInteger = param4.Length
+                        Dim _loc_35 As UInteger = 0
+
+                        If param3.Contains("/store/") Then
+                            _loc_31 = 1
+                            _loc_32 = 1024
+                        ElseIf param3.Contains("/timer/") Then
+                            _loc_31 = 3
+                            _loc_32 = 4
+                        ElseIf param3.Contains("$REARM-COUNT$") Then
+                            _loc_31 = 2
+                            _loc_32 = 2
+                        End If
+
+                        _loc_1.AddRange(BitConverter.GetBytes(_loc_31))
+                        _loc_1.AddRange(BitConverter.GetBytes(_loc_32))
+                        _loc_1.AddRange(BitConverter.GetBytes(_loc_33))
+                        _loc_1.AddRange(BitConverter.GetBytes(_loc_34))
+                        _loc_1.AddRange(BitConverter.GetBytes(_loc_35))
+                        _loc_1.AddRange(_loc_36)
+                        _loc_1.AddRange(param4)
+
+                        _loc_14 = _loc_1.Count Mod 4
+                        If _loc_14 <> 0 Then _loc_1.AddRange(New Byte(4 - _loc_14 - 1) {})
+
+                        'Only return new dat if Key actually modified
+                        _loc_19 = True
+                    End If
                 End If
             Next
         End Using
