@@ -46,7 +46,7 @@ We can then set the ideal grace period.
 
 By the way, I've tried to only tamper the timestamp without touching the corresponding activation data stored from a real KMS activation process, and it simply works. This perfectly proves that the minimum modification requirement for a long-term KMS only involves changing of three timestamps (a total of 24 bytes), as long as you have already gone through a legitimate KMS activation process and trying to turn it from a short-term (180-day) into a long-term (180 years or whatever).
 
-It is interesting to find that Windows automatically "acknowledges" the patched file by re-generate a legitimate "data.dat".
+It is interesting to find that Windows automagically "acknowledges" the patched file by re-generate a legitimate "data.dat".
 
 
 # Configurations
@@ -157,28 +157,28 @@ File has been updated.
 - Step 1: If you performed a Retail installation, you need to execute some commands to convert Retail license to KMS license. The following are examples for Office, Project and Visio 2024 (or find the GVLK for your Office version somewhere):
 
 ```
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ppd.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul-oob.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ppd.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProPlus2024VL_KMS_Client_AE-ul-oob.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inpkey:XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
 ```
 ```
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ppd.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:FQQ23-N4YCY-73HQ3-FM9WC-76HF4
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ppd.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\ProjectPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inpkey:FQQ23-N4YCY-73HQ3-FM9WC-76HF4
 ```
 ```
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ppd.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:B7TN8-FJ8V3-7QYCP-HQPMV-YY89G
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ppd.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inslic:"C:\Program Files\Microsoft Office\root\Licenses16\VisioPro2024VL_KMS_Client_AE-ul-oob.xrm-ms"
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /inpkey:B7TN8-FJ8V3-7QYCP-HQPMV-YY89G
 ```
 
 - Step 2: You also need to do this to prevent Microsoft countermeasures against fake KMS activation from taking effect (you can set your favorite but non-working IP):
 
 ```
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /sethst:192.0.2.0
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /sethst:192.0.2.0
 ```
 
 - Step 3: Run KMS Patrina (as administrator, if you are activating for the local machine).
@@ -199,7 +199,7 @@ File has been updated.
 - Step 4: Check Office activation results
 
 ```
-cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
+cscript "C:\Program Files\Microsoft Office\root\Office16\OSPP.VBS" /dstatus
 ```
 
 ```
